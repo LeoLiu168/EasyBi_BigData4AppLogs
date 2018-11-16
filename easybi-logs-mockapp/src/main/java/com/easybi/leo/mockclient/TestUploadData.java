@@ -1,20 +1,22 @@
 package com.easybi.leo.mockclient;
 
-//import java.io.InputStream;
-//import java.net.HttpURLConnection;
-//import java.net.URL;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import com.alibaba.fastjson.JSONObject;
-import com.easybi.leo.common.AppErrorLog;
-import com.easybi.leo.common.AppEventLog;
-import com.easybi.leo.common.AppLogEntity;
-import com.easybi.leo.common.AppPageLog;
-import com.easybi.leo.common.AppStartupLog;
-import com.easybi.leo.common.AppUsageLog;
+import com.easybi.leo.logdata.AppErrorLog;
+import com.easybi.leo.logdata.AppEventLog;
+import com.easybi.leo.logdata.AppLogEntity;
+import com.easybi.leo.logdata.AppPageLog;
+import com.easybi.leo.logdata.AppStartupLog;
+import com.easybi.leo.logdata.AppUsageLog;
 import com.easybi.leo.utils.PropertiesUtil;
 
 /**
@@ -24,7 +26,8 @@ import com.easybi.leo.utils.PropertiesUtil;
  */
 public class TestUploadData {
 
-//	private static String url = "http://localhost:8080/coll/index";
+	@SuppressWarnings("unused")
+	private static String url = "http://localhost:8080/coll/index";
 
 	private static Random random = new Random();
 
@@ -217,40 +220,57 @@ public class TestUploadData {
 		return result;
 	}
 
-//	private static void httpPost(String urlString, String params) {
-//		URL url;
-//
-//		try {
-//			url = new URL(urlString);
-//			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//			conn.setRequestMethod("POST");
-//			conn.setDoOutput(true);
-//			conn.setDoInput(true);
-//			conn.setUseCaches(false);
-//			conn.setInstanceFollowRedirects(true);
-//			conn.setRequestProperty("User-Agent",
-//					"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0");
-//			conn.setRequestProperty("Content-Type", "application/json");
-//			conn.setConnectTimeout(1000 * 5);
-//			conn.connect();
-//			conn.getOutputStream().write(params.getBytes("utf8"));
-//			conn.getOutputStream().flush();
-//			conn.getOutputStream().close();
-//			byte[] buffer = new byte[1024];
-//			StringBuffer sb = new StringBuffer();
-//			InputStream in = conn.getInputStream();
-//			int httpCode = conn.getResponseCode();
-//			System.out.println(in.available());
-//			while (in.read(buffer, 0, 1024) != -1) {
-//				sb.append(new String(buffer));
-//			}
-//			System.out.println("sb:" + sb.toString());
-//			in.close();
-//			System.out.println(httpCode);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
+	@SuppressWarnings("unused")
+	private static void httpPost(String urlString, String params) {
+		URL url;
+		InputStream in = null;
+		OutputStream out = null;
+		try {
+			url = new URL(urlString);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("POST");
+			conn.setDoOutput(true);
+			conn.setDoInput(true);
+			conn.setUseCaches(false);
+			conn.setInstanceFollowRedirects(true);
+			conn.setRequestProperty("User-Agent",
+					"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0");
+			conn.setRequestProperty("Content-Type", "application/json");
+			conn.setConnectTimeout(1000 * 5);
+			conn.connect();
+			out = conn.getOutputStream();
+			out.write(params.getBytes("utf8"));
+			out.flush();
+			
+			byte[] buffer = new byte[1024];
+			StringBuffer sb = new StringBuffer();
+			in = conn.getInputStream();
+			int httpCode = conn.getResponseCode();
+			System.out.println(in.available());
+			while (in.read(buffer, 0, 1024) != -1) {
+				sb.append(new String(buffer));
+			}
+			System.out.println("sb:" + sb.toString());
+			System.out.println(httpCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (out!=null) {
+				try {
+					out.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (in !=null) {
+				try {
+					in.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 
 	public static void main(String[] args) {
 		uploadMockData();
@@ -296,10 +316,11 @@ public class TestUploadData {
 			ex.printStackTrace();
 		}
 	}
-
-//	private static void Test2() {
-//		boolean result = map1.isEmpty();
-//		System.out.println(result);
-//	}
+	
+	@SuppressWarnings("unused")
+	private static void Test2() {
+		boolean result = map1.isEmpty();
+		System.out.println(result);
+	}
 
 }

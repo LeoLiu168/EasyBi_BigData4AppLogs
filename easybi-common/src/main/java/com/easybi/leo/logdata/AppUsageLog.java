@@ -1,4 +1,4 @@
-package com.easybi.leo.common;
+package com.easybi.leo.logdata;
 
 /**
  * 应用上报的使用时长相关信息

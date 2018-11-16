@@ -1,4 +1,4 @@
-package com.easybi.leo.common;
+package com.easybi.leo.logdata;
 
 /**
  * 启动日志

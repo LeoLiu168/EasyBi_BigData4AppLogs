@@ -1,4 +1,4 @@
-package com.easybi.leo.common;
+package com.easybi.leo.logdata;
 
 import java.util.Map;
 

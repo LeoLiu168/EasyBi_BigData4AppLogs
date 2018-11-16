@@ -1,4 +1,4 @@
-package com.easybi.leo.common;
+package com.easybi.leo.logdata;
 
 /**
  * 应用上报的app错误日志相关信息
